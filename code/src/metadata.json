@@ -1,0 +1,39 @@
+{
+
+  "columns": {
+
+    "Transaction_ID": {"type": "int", "validation": "unique"},
+
+    "Account_Balance": {"type": "float", "validation": "non_negative"},
+
+    "Transaction_Amount": {"type": "float", "validation": "match_reported_amount"},
+
+    "Reported_Amount": {"type": "float", "validation": "match_transaction_amount"},
+
+    "Currency": {"type": "string", "validation": "valid_currency"},
+
+    "Country": {"type": "string", "validation": "valid_country"},
+
+    "Transaction_Date": {"type": "date", "validation": "not_future"},
+
+    "Risk_Score": {"type": "int", "validation": "dynamic_risk_scoring"}
+
+  },
+
+  "rules": {
+
+    "match_reported_amount": "Transaction_Amount should match Reported_Amount unless cross-currency (1% deviation allowed).",
+
+    "non_negative": "Account_Balance should never be negative unless OD flag is present.",
+
+    "valid_currency": "Currency should be a valid ISO 4217 code.",
+
+    "valid_country": "Country should be an accepted jurisdiction.",
+
+    "not_future": "Transaction_Date should not be in the future.",
+
+    "dynamic_risk_scoring": "Risk_Score should be calculated based on transaction patterns and historical violations."
+
+  }
+
+}
